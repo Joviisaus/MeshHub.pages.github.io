@@ -8,6 +8,7 @@ authorImageAlt: "Avatar Description"
 pubDate: 2024-02-18
 cardImage: "@/images/blog/post-3.avif"
 cardImageAlt: "Side view worker wearing gloves"
+readTime: 3
 tags: ["procurement", "affordable", "efficiency" ]
 contents: [
         "Managing a construction project can be overwhelming, especially when it comes to procurement. That's why ScrewFast is committed to simplifying the process and keeping your projects within budget.",
