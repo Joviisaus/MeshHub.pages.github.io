@@ -1,28 +1,25 @@
 // An array of links for navigation bar
 const navBarLinks = [
-  { name: "Home", url: "/" },
-  { name: "Products", url: "/products" },
-  { name: "Services", url: "/services" },
-  { name: "Blog", url: "/blog" },
-  { name: "Contact", url: "/contact" },
+  { name: "主页", url: "/" },
+  { name: "资料", url: "/products" },
+  { name: "任务", url: "/blog" },
 ];
 // An array of links for footer
 const footerLinks = [
   {
-    section: "Ecosystem",
+    section: "关于本站点",
     links: [
-      { name: "Documentation", url: "/welcome-to-docs/" },
-      { name: "Tools & Equipment", url: "/products" },
-      { name: "Construction Services", url: "/services" },
+      { name: "网页文档", url: "/welcome-to-docs/" },
+      { name: "主题", url: "https://github.com/mearashadowfax/ScrewFast" },
+      { name: "构建", url: "https://astro.build/"},
     ],
   },
   {
-    section: "Company",
+    section: "本站",
     links: [
-      { name: "About us", url: "#" },
-      { name: "Blog", url: "/blog" },
-      { name: "Careers", url: "#" },
-      { name: "Customers", url: "#" },
+      { name: "关于", url: "#" },
+      { name: "任务", url: "/blog" },
+      { name: "资料", url: "/products" },
     ],
   },
 ];
