@@ -11,27 +11,64 @@ import { capitalize, formatDate } from "@utils/utils";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import { SITE } from "@data/constants";
+import fs from 'fs';
+import matter from 'gray-matter';
+import { unified } from 'unified';
+import remarkParse from'remark-parse';
+import remarkRehype from'remark-rehype';
+import rehypeStringify from'rehype-stringify';
+
+// 处理 Markdown 的函数
+const processMarkdown = (markdownPath: string) => {
+    try {
+        const fileContents = fs.readFileSync(markdownPath, 'utf8');
+        const { data, content } = matter(fileContents);
+
+        const processedContent = unified()
+           .use(remarkParse)
+           .use(remarkRehype)
+           .use(rehypeStringify)
+           .processSync(content)
+           .toString();
+
+        return {
+            metadata: data,
+            content: processedContent
+        };
+    } catch (error) {
+        console.error(`Error processing Markdown file ${markdownPath}:`, error);
+        return {
+            metadata: {},
+            content: ''
+        };
+    }
+};
 
 // Update getStaticPaths for English posts
 export async function getStaticPaths() {
-  const blogPosts = await getCollection("blog", ({ id }) =>
-    id.startsWith("en/")
-  );
-  return blogPosts.map((post) => {
-    const idWithoutLang = post.id.replace(/^en\//, ""); // Remove the "en/" prefix
-    return {
-      params: { id: idWithoutLang },
-      props: { post },
-    };
-  });
+    const blogPosts = await getCollection("blog", ({ id }) =>
+        id.startsWith("en/")
+    );
+    return blogPosts.map((post) => {
+        const idWithoutLang = post.id.replace(/^en\//, ""); // Remove the "en/" prefix
+        return {
+            params: { id: idWithoutLang },
+            props: { 
+                post,
+                // 假设这里能通过某种方式从 post 得到 Markdown 文件路径
+                // 实际情况可能需要根据项目结构调整
+                markdownPath: `src/content/blog/${post.id}.md` 
+            },
+        };
+    });
 }
 
 // Get the current post's data
-const { post } = Astro.props;
+const { post, markdownPath } = Astro.props;
 
 const blogPosts: CollectionEntry<"blog">[] = await getCollection(
-  "blog",
-  ({ id }) => id.startsWith("en/")
+    "blog",
+    ({ id }) => id.startsWith("en/")
 );
 
 // Filter out the current post to get related posts
@@ -39,8 +76,11 @@ const blogPosts: CollectionEntry<"blog">[] = await getCollection(
 // In a production site, you might want to implement a more robust algorithm, choosing related posts based on tags, categories, dates, authors, or keywords.
 // See example: https://blog.codybrunner.com/2024/adding-related-articles-with-astro-content-collections/
 const relatedPosts: CollectionEntry<"blog">[] = blogPosts.filter(
-  (blogEntry) => blogEntry.id !== post.id
+    (blogEntry) => blogEntry.id !== post.id
 );
+
+// 处理当前文章的 Markdown 内容
+const postContent = processMarkdown(markdownPath);
 
 const pageTitle: string = `${post.data.title} | ${SITE.title}`;
 ---
@@ -105,6 +145,7 @@ const pageTitle: string = `${post.data.title} | ${SITE.title}`;
             )
           )
         }
+        <div class="post-content" set:html={postContent.content}></div>
       </div>
       <div
         class="mx-auto grid max-w-(--breakpoint-lg) gap-y-5 sm:flex sm:items-center sm:justify-between sm:gap-y-0"
