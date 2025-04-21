@@ -9,9 +9,9 @@ const footerLinks = [
   {
     section: "关于本站点",
     links: [
-      { name: "网页文档", url: "/welcome-to-docs/" },
+      { name: "仓库地址", url: "https://github.com/Joviisaus/MeshHub" },
       { name: "主题", url: "https://github.com/mearashadowfax/ScrewFast" },
-      { name: "构建", url: "https://astro.build/"},
+      { name: "构建", url: "https://astro.build/" },
     ],
   },
   {
