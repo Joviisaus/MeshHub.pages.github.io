@@ -4,7 +4,7 @@ description: "Innovating Construction Efficiency with Precision Tools & Support"
 author: "Jacob"
 authorImage: "@/images/blog/jacob.avif"
 authorImageAlt: "Avatar Description"
-pubDate: 2024-02-06
+pubDate: 2024-05-06
 cardImage: "@/images/blog/post-1.avif"
 cardImageAlt: "Top view mechanical tools arrangement"
 readTime: 4
