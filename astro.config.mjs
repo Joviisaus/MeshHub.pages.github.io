@@ -11,7 +11,7 @@ import mdx from "@astrojs/mdx";
 // https://astro.build/config
 export default defineConfig({
   // https://docs.astro.build/en/guides/images/#authorizing-remote-images
-  site: "connect.viisaus.tech",
+  site: "Meshhub.pages.github.io",
   image: {
     domains: ["images.unsplash.com"],
   },
